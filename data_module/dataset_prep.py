@@ -1,28 +1,46 @@
+# Copyright 2022 Mayo Clinic. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+
+
 import os
 import sys
 import logging
 import subprocess
+import hydra
+from omegaconf import DictConfig, OmegaConf
 
 from pathlib import Path
 
 
-def resolve_gcs_uri_to_local_uri(gcs_file_uri):
+def resolve_gcs_uri_to_local_uri(cfg):
     """
     Use an existing gcsfuse mountpoint, or use gcsfuse to mount a bucket
     locally if not mountpoint exists, to get a local filepath for a file stored
     in a GCS bucket.
     Args:
-        gcs_file_uri (str): A "gs:/..." URI for a file stored in a GCS bucket.
+        cfg:
     Returns:
         str: A string indicating a local filepath where gcs_file_uri can be
         found.
     """
-    if not gcs_file_uri.startswith("gs:/"):
+    if not cfg.gcs_file_uri.startswith("gs:/"):
         raise Exception('Please use a "gs:/" GCS path.')
 
     # Pathlib isn't wholly apposite to use for URLs (specifically, it changes
     # 'gs://...' to 'gs:/...'), but it's useful in this case:
-    gcs_path = Path(gcs_file_uri)
+    gcs_path = Path(cfg.gcs_file_uri)
     bucket_name = gcs_path.parts[1]
     file_remaining_path = Path(*gcs_path.parts[2:])
     logging.info("Checking for existing mountpoint for %s...", bucket_name)
@@ -85,17 +103,33 @@ def rsna_ich_download():
     cmd = "kaggle competitions download -c rsna-intracranial-hemorrhage-detection"
     os.system(cmd)
 
-def gcp_rsna_ich_prep(gcs_file_uri, local_dataset_path):
+def gcp_rsna_ich_prep(cfg):
     """_summary_
 
     Args:
         gcs_file_uri (_type_): _description_
         local_dataset_path (_type_): _description_
     """
-    base_path = resolve_gcs_uri_to_local_uri(gcs_file_uri=gcs_file_uri)
-    cmd = f"cp -r {local_dataset_path} {base_path}"
+    base_path = resolve_gcs_uri_to_local_uri(gcs_file_uri=cfg.gcs_file_uri)
+    cmd = f"cp -r {cfg.local_dataset_path} {base_path}"
     os.system(cmd)
+
+@hydra.main(version_base=None, config_path="configs", config_name="dataset")
+def main(cfg: DictConfig) -> None:
+    """_summary_
+
+    Args:
+        cfg (DictConfig): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    for key, value in cfg.items():
+        if value == "None":
+            cfg[key] = eval(value)
+    gcp_rsna_ich_prep(cfg)
 
 
 if __name__=="__main__":
-    
+    print("Start to prepare RSNA ICH Dataset")
+    main()
