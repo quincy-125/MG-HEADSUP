@@ -1,0 +1,39 @@
+# Copyright 2022 Mayo Clinic. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+
+
+## The kf_cv_config yaml file starts with "---", comments start with "#", and the
+## kf_cv_config yaml file ends with "..."
+
+---
+  ## path to DICOM fike
+  dcm_file_path: /path to dcm file/
+  ## wether normalizing the image array, default be True
+  rescale: True
+  ## type of the window image, default value is default, which returns the window image from the DICOM file, if value be custom, it will return the window image based on the customized window center and width
+  win_img_type: default
+  ## center value of the window image, 40 for brain or soft tissue window, 80 for subdural window
+  window_center: [40, 80, 40]
+  ## width value of the window image, 80 for brain window, 200 for subdural window, and 380 for soft tissue window
+  window_width: [80, 200, 380]
+  ## sigma value used for Gaussian Blurring, default value be 3
+  blur_sigma: 3
+  ## sigma value for canny edge detection, default value be 4
+  canny_sigma: 4
+  ## attribute tags of DICOM file
+  dcm_metadata_tags: ["SOPInstanceUID", "PatientID", "StudyInstanceUID", "SeriesInstanceUID"]
+  ## image preprocessing task name, options include source_img, default_win_img, customize_win_img, combine_win_img, blur_win_img, blur_comb_img, edge_detect, and metadata_extract
+  task: source_img
+...
