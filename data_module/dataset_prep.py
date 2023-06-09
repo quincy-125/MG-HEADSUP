@@ -96,11 +96,12 @@ def resolve_gcs_uri_to_local_uri(cfg):
 
     return os.path.join(tmp_directory, file_remaining_path)
 
+
 def rsna_ich_download():
-    """_summary_
-    """
+    """_summary_"""
     cmd = "kaggle competitions download -c rsna-intracranial-hemorrhage-detection"
     os.system(cmd)
+
 
 def gcp_rsna_ich_prep(cfg):
     """_summary_
@@ -112,6 +113,7 @@ def gcp_rsna_ich_prep(cfg):
     base_path = resolve_gcs_uri_to_local_uri(gcs_file_uri=cfg.gcs_file_uri)
     cmd = f"cp -r {cfg.local_dataset_path} {base_path}"
     os.system(cmd)
+
 
 @hydra.main(version_base=None, config_path="configs", config_name="dataset")
 def main(cfg: DictConfig) -> None:
@@ -129,6 +131,6 @@ def main(cfg: DictConfig) -> None:
     gcp_rsna_ich_prep(cfg)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     print("Start to prepare RSNA ICH Dataset")
     main()

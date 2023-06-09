@@ -42,7 +42,7 @@ def preprocess_ich_imgs(cfg):
         custom_win_ary = custom_window_image(
             dcm=dcm,
             window_center=cfg.window_center[0],
-            window_width=cfg.window_width[0]
+            window_width=cfg.window_width[0],
         )
         custom_win_img = np.fromarray(np.uint8(custom_win_ary))
         return custom_win_img
@@ -58,23 +58,21 @@ def preprocess_ich_imgs(cfg):
         win_img1 = custom_window_image(
             dcm=dcm,
             window_center=cfg.window_center[0],
-            window_width=cfg.window_width[0]
+            window_width=cfg.window_width[0],
         )
         win_img2 = custom_window_image(
             dcm=dcm,
             window_center=cfg.window_center[1],
-            window_width=cfg.window_width[1]
+            window_width=cfg.window_width[1],
         )
         win_img3 = custom_window_image(
             dcm=dcm,
             window_center=cfg.window_center[2],
-            window_width=cfg.window_width[2]
+            window_width=cfg.window_width[2],
         )
 
         blurred_comb_ary = rgb_comb_img_blur(
-            win_img1=win_img1,
-            win_img2=win_img2,
-            win_img3=win_img3
+            win_img1=win_img1, win_img2=win_img2, win_img3=win_img3
         )
         blurred_comb_img = np.fromarray(np.uint8(blurred_comb_ary))
         return blurred_comb_img
@@ -85,6 +83,7 @@ def preprocess_ich_imgs(cfg):
     else:
         metadata_df = dcm_metadata_df(dcm=dcm, cfg=cfg)
         return metadata_df
+
 
 @hydra.main(version_base=None, config_path="configs", config_name="preprocess")
 def main(cfg: DictConfig) -> None:
@@ -102,6 +101,6 @@ def main(cfg: DictConfig) -> None:
     preprocess_ich_imgs(cfg)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     print("Start to Preprocess Images from the RSNA ICH Dataset")
     main()
