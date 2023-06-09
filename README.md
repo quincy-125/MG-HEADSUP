@@ -1,5 +1,5 @@
 # MG_HEADSUP <img src="pics/headsup_logo.png" width="150px" align="right"/>
-Hemmorrhage Evaluation And Detector System for Underserved Populations, a collaboration project with the joint efforts from Neurologists, and Machine Learning Scientist from the Mayo Clinic and Google.
+Hemmorrhage Evaluation And Detector System for Underserved Populations, a collaboration project with the joint efforts from Neurologists, and Machine Learning Scientist from the Mayo Clinic.
 
 [ArXiv]() | [Jounral Link]()
 
