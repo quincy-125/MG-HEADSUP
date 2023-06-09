@@ -57,7 +57,7 @@ def default_window_image(dcm, cfg):
 
     Args:
         dcm (_type_): _description_
-        rescale (bool, optional): _description_. Defaults to True.
+        cfg (_type_): _description_
 
     Returns:
         _type_: _description_
@@ -166,8 +166,8 @@ def grayscale_win_img_blur(dcm, cfg):
     """_summary_
 
     Args:
-        win_img_type (_type_): _description_
-        blur_sigma (_type_): _description_
+        dcm (_type_): _description_
+        cfg (_type_): _description_
 
     Returns:
         _type_: _description_
@@ -226,6 +226,7 @@ def dcm_metadata_df(dcm, cfg):
 
     Args:
         dcm (_type_): _description_
+        cfg (_type_): _description_
 
     Returns:
         _type_: _description_

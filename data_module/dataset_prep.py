@@ -24,15 +24,18 @@ from pathlib import Path
 
 
 def resolve_gcs_uri_to_local_uri(cfg):
-    """
-    Use an existing gcsfuse mountpoint, or use gcsfuse to mount a bucket
-    locally if not mountpoint exists, to get a local filepath for a file stored
-    in a GCS bucket.
+    """_summary_
+
     Args:
-        cfg:
+        cfg (_type_): _description_
+
+    Raises:
+        Exception: _description_
+        Exception: _description_
+        Exception: _description_
+
     Returns:
-        str: A string indicating a local filepath where gcs_file_uri can be
-        found.
+        _type_: _description_
     """
     if not cfg.gcs_file_uri.startswith("gs:/"):
         raise Exception('Please use a "gs:/" GCS path.')
@@ -107,8 +110,7 @@ def gcp_rsna_ich_prep(cfg):
     """_summary_
 
     Args:
-        gcs_file_uri (_type_): _description_
-        local_dataset_path (_type_): _description_
+        cfg (_type_): _description_
     """
     base_path = resolve_gcs_uri_to_local_uri(gcs_file_uri=cfg.gcs_file_uri)
     cmd = f"cp -r {cfg.local_dataset_path} {base_path}"
