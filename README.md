@@ -1,7 +1,7 @@
 # MG-HEADSUP <img src="pics/headsup_logo.png" width="150px" align="right"/>
 Hemmorrhage Evaluation And Detector System for Underserved Populations, a collaboration project with the joint efforts from Neurologists, and Machine Learning Scientist from the Mayo Clinic.
 
-[MedRxiv](https://www.medrxiv.org/content/10.1101/2023.06.25.23291870v1) | [Journal Link]()
+[Journal Link](https://www.sciencedirect.com/science/article/pii/S2949761223000779)
 
 The Structure of the Codebase:
 ```
